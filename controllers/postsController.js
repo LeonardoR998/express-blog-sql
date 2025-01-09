@@ -1,3 +1,5 @@
+const connection = require("../db/conn");
+
 const posts = require("../data/postsData");
 
 // Funzione per ottenere tutti i post
