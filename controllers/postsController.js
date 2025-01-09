@@ -68,17 +68,16 @@ const addPost = (req, res) => {
 
 // Funzione per eliminare un post
 const deletePost = (req, res) => {
-  // Trovo l'indice del post nell'array che corrisponde all'ID passato
-  const postIndex = posts.findIndex((p) => p.id === parseInt(req.params.id));
+  const sql = "DELETE FROM `posts` WHERE `id` = ?";
+  const id = parseInt(req.params.id);
 
-  // Se il post non viene trovato, restituisco un errore 404
-  if (postIndex === -1) return res.status(404).send("Post non trovato");
+  connection.query(sql, [id], (err) => {
+    if (err) {
+      return res.status(500).json({ error: "Errore interno al server." });
+    }
 
-  // Rimuovo il post trovato dall'array dei post
-  posts.splice(postIndex, 1);
-
-  // Rispondo con un codice di stato 204  per indicare che il post è stato eliminato con successo
-  res.status(204).send();
+    res.sendStatus(204);
+  });
 };
 
 // ! UPDATE ///
