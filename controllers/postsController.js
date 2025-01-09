@@ -2,11 +2,17 @@ const connection = require("../db/conn");
 
 const posts = require("../data/postsData");
 
+// ! INDEX ///
+
 // Funzione per ottenere tutti i post
 const getAllPosts = (req, res) => {
-  // Restituisco l'intero array dei post in formato JSON
-  res.json(posts);
+  const sql = "SELECT * FROM `posts`";
+  connection.query(sql, (err, results) => {
+    res.json(results);
+  });
 };
+
+// ! SHOW ///
 
 // Funzione per ottenere un singolo post
 const getPostById = (req, res) => {
@@ -19,6 +25,8 @@ const getPostById = (req, res) => {
   // Se il post viene trovato, restituisco il post
   res.json(post);
 };
+
+// ! CREATE ///
 
 // Funzione per aggiungere un nuovo post
 const addPost = (req, res) => {
@@ -47,6 +55,8 @@ const addPost = (req, res) => {
   res.status(201).json(newPost);
 };
 
+// ! DELETE///
+
 // Funzione per eliminare un post
 const deletePost = (req, res) => {
   // Trovo l'indice del post nell'array che corrisponde all'ID passato
@@ -61,6 +71,8 @@ const deletePost = (req, res) => {
   // Rispondo con un codice di stato 204  per indicare che il post è stato eliminato con successo
   res.status(204).send();
 };
+
+// ! UPDATE ///
 
 // Funzione per aggiornare un post
 const updatePost = (req, res) => {
