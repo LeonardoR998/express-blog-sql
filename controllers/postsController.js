@@ -8,6 +8,9 @@ const posts = require("../data/postsData");
 const getAllPosts = (req, res) => {
   const sql = "SELECT * FROM `posts`";
   connection.query(sql, (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: "Database query failed" });
+    }
     res.json(results);
   });
 };
@@ -21,11 +24,11 @@ const getPostById = (req, res) => {
 
   connection.query(sql, [postId], (err, results) => {
     if (err) {
-      return res.status(500).json({ error: "Errore interno al server." });
+      return res.status(500).json({ error: "Database query failed" });
     }
 
     if (results.length === 0) {
-      return res.status(404).json({ error: "Post non trovato." });
+      return res.status(404).json({ error: "Post not found" });
     }
 
     res.json(results[0]);
