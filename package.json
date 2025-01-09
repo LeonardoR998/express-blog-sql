@@ -1,0 +1,20 @@
+{
+  "name": "express-fine",
+  "version": "1.0.0",
+  "description": "First project ",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node --watch app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "express-intro"
+  },
+  "author": "Leonardo Ricci",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.1"
+  }
+}
