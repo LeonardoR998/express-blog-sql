@@ -16,14 +16,20 @@ const getAllPosts = (req, res) => {
 
 // Funzione per ottenere un singolo post
 const getPostById = (req, res) => {
-  // Cerco il post che corrisponde all'ID passato come parametro nella richiesta
-  const post = posts.find((p) => p.id === parseInt(req.params.id));
+  const sql = "SELECT * FROM `posts` WHERE `id` = ?";
+  const postId = parseInt(req.params.id);
 
-  // Se il post non viene trovato, restituisco un errore 404
-  if (!post) return res.status(404).send("Post non trovato");
+  connection.query(sql, [postId], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: "Errore interno al server." });
+    }
 
-  // Se il post viene trovato, restituisco il post
-  res.json(post);
+    if (results.length === 0) {
+      return res.status(404).json({ error: "Post non trovato." });
+    }
+
+    res.json(results[0]);
+  });
 };
 
 // ! CREATE ///
